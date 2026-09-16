@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#f4b942"/>
-  <text x="32" y="40" fill="#1e1b4b" font-family="Arial, sans-serif" font-size="20" font-weight="700" text-anchor="middle">BFO</text>
+  <text x="32" y="29" fill="#1e1b4b" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">KB</text>
+  <text x="32" y="49" fill="#1e1b4b" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">FO</text>
 </svg>

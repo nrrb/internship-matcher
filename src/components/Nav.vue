@@ -9,7 +9,7 @@
         </span>
       </RouterLink>
       <nav class="flex items-center gap-1 rounded-xl bg-white/10 p-1" aria-label="Main navigation">
-        <RouterLink to="/" class="nav-link">Optimizer</RouterLink>
+        <RouterLink to="/" class="nav-link">Internship matching</RouterLink>
         <RouterLink to="/qualtrics" class="nav-link">Qualtrics converter</RouterLink>
       </nav>
     </div>

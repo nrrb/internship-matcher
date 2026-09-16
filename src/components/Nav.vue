@@ -1,86 +1,26 @@
 <template>
-  <div>
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list>
-        <v-subheader>
-          Making our students happier with less work. 😅
-        </v-subheader>
-        <v-list-item v-for="(link, i) in links" :key="i" :to="link.route">
-          <v-list-item-icon>
-            <v-icon color="deep-purple" v-text="link.icon"></v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="link.text"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item @click.stop="celebrate" class="pink lighten-4" dark>
-          <v-list-item-icon>
-            <v-icon color="deep-purple">mdi-party-popper</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Celebrate</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar
-      color="deep-purple"
-      fixed
-      app
-      dark
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>{{ appTitle }}</v-toolbar-title>
-    </v-app-bar>
-  </div>
+  <header class="border-b border-white/15 bg-ink text-white shadow-lg">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+      <RouterLink to="/" class="flex items-center gap-3">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-gold font-bold text-ink">KB</span>
+        <span>
+          <span class="block text-xs font-semibold uppercase tracking-[0.18em] text-gold">Kellogg</span>
+          <span class="block text-base font-semibold leading-tight">Board Fellows Optimizer</span>
+        </span>
+      </RouterLink>
+      <nav class="flex items-center gap-1 rounded-xl bg-white/10 p-1" aria-label="Main navigation">
+        <RouterLink to="/" class="nav-link">Optimizer</RouterLink>
+        <RouterLink to="/qualtrics" class="nav-link">Qualtrics converter</RouterLink>
+      </nav>
+    </div>
+  </header>
 </template>
 
-<script>
-import Vue from 'vue'
-import kelloggConfetti from '@/utils/kellogg-confetti'
-
-export default Vue.extend({
-  data() {
-    return {
-      appTitle: "Kellogg Board Fellows Optimizer",
-      drawer: false,
-      links: [
-        {
-          text: "KBF Optimizer",
-          icon: "mdi-square-root",
-          route: "/"
-        },
-        {
-          text: "Qualtrics Converter",
-          icon: "mdi-database-cog",
-          route: "/qualtrics",
-        },
-      ],
-    }
-  },
-  methods: {
-    celebrate() {
-      kelloggConfetti(0.5)
-    }
-  }
-});
-</script>
-
 <style scoped>
-header {
-  /* position: absolute !important;
-  top: 0 !important;
-  left: 0 !important; */
-  z-index: 99999 !important;
+.nav-link {
+  @apply rounded-lg px-3 py-2 text-sm font-medium text-indigo-100 transition hover:bg-white/10 hover:text-white;
 }
-
-nav,
-main {
-  margin-top: 4rem !important;
-}
-
-main {
-  padding: 2rem;
+.router-link-exact-active {
+  @apply bg-white text-ink shadow-sm hover:bg-white hover:text-ink;
 }
 </style>

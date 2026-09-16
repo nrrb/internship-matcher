@@ -1,4 +1,4 @@
-function saveFile(filename, data, mimetype) {
+export function saveFile(filename, data, mimetype) {
   var blob = new Blob([data], {type: mimetype});
   if(window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveOrOpenBlob(blob, filename);
@@ -12,5 +12,3 @@ function saveFile(filename, data, mimetype) {
     document.body.removeChild(elem);
   }
 }
-
-module.exports = { saveFile }

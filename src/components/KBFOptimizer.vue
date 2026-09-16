@@ -32,7 +32,22 @@ const topThreeRate = computed(() => percentageFor(rank => rank <= 3))
 function percentageFor(predicate) { return assignments.value.length ? Math.round((assignments.value.filter(({ ranking }) => predicate(ranking)).length / assignments.value.length) * 100) : 0 }
 function clearValidation() { errors.value = []; assignments.value = [] }
 function reset() { csvRankings.value = ''; errors.value = []; assignments.value = []; average.value = null }
-function loadSample() { csvRankings.value = 'Student Name,Patagonia,Adobe,Duolingo,Salesforce\nAvery Chen,1,3,2,4\nJordan Smith,2,1,4,3\nMorgan Lee,3,2,1,4\nSam Rivera,4,3,2,1'; clearValidation() }
+function loadSample() {
+  csvRankings.value = [
+    'Student Name,Acme Health,BrightPath,CivicWave,Delta Energy,Elevate Foods,FutureLabs,GreenBridge,HarborWorks,Insight Partners,Juniper Finance,Kindred Media,Lumen Mobility',
+    'Avery Chen,1,3,6,9,,2,7,10,5,4,8,',
+    'Jordan Smith,1,2,,9,4,8,5,,6,3,7,10',
+    'Morgan Lee,1,8,3,,6,2,10,5,,7,4,9',
+    'Sam Rivera,7,6,10,1,3,9,4,2,,8,5,',
+    'Riley Brooks,5,10,9,1,4,,6,8,3,,2,7',
+    'Casey Morgan,10,5,2,,8,1,7,3,9,4,,6',
+    'Devon Patel,6,1,,5,10,7,3,9,2,,4,8',
+    'Taylor Kim,7,4,,10,2,9,6,1,8,5,3,',
+    'Quinn Davis,,9,3,6,,5,2,7,4,1,8,10',
+    'Parker Jones,9,5,,7,10,4,,6,3,8,1,2',
+  ].join('\n')
+  clearValidation()
+}
 function parseAndValidate() {
   const data = Papa.parse(csvRankings.value.trim(), { skipEmptyLines: true }).data.map(row => row.map(cell => String(cell).trim())), issues = []
   if (data.length < 2) issues.push('Add a header row and at least one student row.')

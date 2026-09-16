@@ -30,23 +30,30 @@ const averageRank = computed(() => average.value === null ? '–' : Number(avera
 const matchedCompanies = computed(() => new Set(assignments.value.map(({ company }) => company)).size)
 const firstChoiceRate = computed(() => percentageFor(rank => rank === 1))
 const topThreeRate = computed(() => percentageFor(rank => rank <= 3))
+const demoStudents = ['Avery Chen', 'Jordan Smith', 'Morgan Lee', 'Sam Rivera', 'Riley Brooks', 'Casey Morgan', 'Devon Patel', 'Taylor Kim', 'Quinn Davis', 'Parker Jones']
+const demoInternships = ['Acme Health', 'BrightPath', 'CivicWave', 'Delta Energy', 'Elevate Foods', 'FutureLabs', 'GreenBridge', 'HarborWorks', 'Insight Partners', 'Juniper Finance', 'Kindred Media', 'Lumen Mobility']
+const popularDemoInternships = ['Acme Health', 'BrightPath', 'Delta Energy', 'FutureLabs']
 function percentageFor(predicate) { return assignments.value.length ? Math.round((assignments.value.filter(({ ranking }) => predicate(ranking)).length / assignments.value.length) * 100) : 0 }
 function clearValidation() { errors.value = []; assignments.value = [] }
 function reset() { csvRankings.value = ''; errors.value = []; assignments.value = []; average.value = null }
+function shuffle(values) {
+  const result = [...values]
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1))
+    ;[result[index], result[swapIndex]] = [result[swapIndex], result[index]]
+  }
+  return result
+}
 function loadSample() {
-  csvRankings.value = [
-    'Student Name,Acme Health,BrightPath,CivicWave,Delta Energy,Elevate Foods,FutureLabs,GreenBridge,HarborWorks,Insight Partners,Juniper Finance,Kindred Media,Lumen Mobility',
-    'Avery Chen,1,3,6,9,,2,7,10,5,4,8,',
-    'Jordan Smith,1,2,,9,4,8,5,,6,3,7,10',
-    'Morgan Lee,1,8,3,,6,2,10,5,,7,4,9',
-    'Sam Rivera,7,6,10,1,3,9,4,2,,8,5,',
-    'Riley Brooks,5,10,9,1,4,,6,8,3,,2,7',
-    'Casey Morgan,10,5,2,,8,1,7,3,9,4,,6',
-    'Devon Patel,6,1,,5,10,7,3,9,2,,4,8',
-    'Taylor Kim,7,4,,10,2,9,6,1,8,5,3,',
-    'Quinn Davis,,9,3,6,,5,2,7,4,1,8,10',
-    'Parker Jones,9,5,,7,10,4,,6,3,8,1,2',
-  ].join('\n')
+  const rows = demoStudents.map(student => {
+    const firstChoice = popularDemoInternships[Math.floor(Math.random() * popularDemoInternships.length)]
+    const rankedInternships = [firstChoice, ...shuffle(demoInternships.filter(internship => internship !== firstChoice)).slice(0, 9)]
+    return [student, ...demoInternships.map(internship => {
+      const rank = rankedInternships.indexOf(internship)
+      return rank === -1 ? '' : rank + 1
+    })]
+  })
+  csvRankings.value = Papa.unparse([['Student Name', ...demoInternships], ...rows])
   clearValidation()
 }
 function parseAndValidate() {
